@@ -26,10 +26,15 @@ pipeline {
             }
         }
 
-        stage('Deploy'){
+        stage('Deploy') {
             steps {
                 sh '''
+                    mkdir -p "$JENKINS_HOME/$ENV"
+                    cp main "$JENKINS_HOME/$ENV/$ENV"
+
                     export JENKINS_NODE_COOKIE=do_not_kill
+                    export BRANCH=$BRANCH_NAME
+
                     bash scripts/deploy.sh
                 '''
             }
