@@ -28,6 +28,7 @@ pipeline {
             steps {
                 sh '''
                     export JENKINS_NODE_COOKIE=do_not_kill
+                    export BRANCH=$BRANCH_NAME
                     bash scripts/deploy.sh
                 '''
             }
