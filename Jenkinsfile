@@ -11,7 +11,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Go application'
-            }
+            	sh 'go version'
+                sh 'go build -o main main.go'
+	    }
         }
 
         stage('Test') {
