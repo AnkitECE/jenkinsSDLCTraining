@@ -14,8 +14,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'bash scripts/build.sh' // Run the build.sh asset
-            }
+                echo 'Building Go application'
+            	sh 'go version'
+                sh 'go build -o main main.go'
+	        }
         }
         stage('Test') {
             steps {
@@ -25,7 +27,11 @@ pipeline {
 <<<<<<< HEAD
         stage('Deploy'){
             steps {
-                sh 'bash scripts/deploy.sh' // Run the deploy.sh asset
+                sh '''
+                    export JENKINS_NODE_COOKIE=do_not_kill
+                    export BRANCH=$BRANCH_NAME
+                    bash scripts/deploy.sh
+                '''
             }
         }
 =======
