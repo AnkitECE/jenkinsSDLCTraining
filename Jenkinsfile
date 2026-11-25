@@ -14,8 +14,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'bash scripts/build.sh' // Run the build.sh asset
-            }
+                echo 'Building Go application'
+            	sh 'go version'
+                sh 'go build -o main main.go'
+	        }
         }
         stage('Test') {
             steps {
