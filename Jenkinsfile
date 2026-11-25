@@ -3,6 +3,7 @@ pipeline {
     tools { go 'go-1.19' } 
     environment {
         ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
+        BRANCH=$BRANCH_NAME
     }
 
     stages {    
@@ -24,17 +25,14 @@ pipeline {
                 sh 'bash scripts/test.sh' // Run the test.sh asset
             }
         }
-<<<<<<< HEAD
+
         stage('Deploy'){
             steps {
                 sh '''
                     export JENKINS_NODE_COOKIE=do_not_kill
-                    export BRANCH=$BRANCH_NAME
                     bash scripts/deploy.sh
                 '''
             }
         }
-=======
->>>>>>> 25bd6852046df3e4f301b1c4f23494242eec0839
     }
 }
