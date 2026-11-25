@@ -24,7 +24,10 @@ pipeline {
         }
         stage('Deploy'){
             steps {
-                sh 'bash scripts/deploy.sh' // Run the deploy.sh asset
+                sh '''
+                    export JENKINS_NODE_COOKIE=do_not_kill
+                    bash scripts/deploy.sh
+                '''
             }
         }
     }
