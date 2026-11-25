@@ -1,7 +1,11 @@
 pipeline {
     agent any
+    tools { go 'go-1.19' } 
+    environment {
+        ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
+    }
 
-    stages {
+    stages {    
         stage('Checkout') {
             steps {
                 echo 'Source code checked out'
@@ -10,15 +14,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building Go application'
-            	sh 'go version'
-                sh 'go build -o main main.go'
-	    }
+                sh 'bash scripts/build.sh' // Run the build.sh asset
+            }
         }
-
         stage('Test') {
             steps {
-                echo 'Testing Go application'
+                sh 'bash scripts/test.sh' // Run the test.sh asset
             }
         }
     }
