@@ -22,10 +22,13 @@ pipeline {
                 sh 'bash scripts/test.sh' // Run the test.sh asset
             }
         }
+<<<<<<< HEAD
         stage('Deploy'){
             steps {
                 sh 'bash scripts/deploy.sh' // Run the deploy.sh asset
             }
         }
+=======
+>>>>>>> 25bd6852046df3e4f301b1c4f23494242eec0839
     }
 }
