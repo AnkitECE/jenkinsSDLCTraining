@@ -49,6 +49,6 @@ pipeline {
                       message: "Build for job ${env.JOB_NAME} finished with status ${currentBuild.currentResult} - (<${env.BUILD_URL}|Open>)"
         }
     }
-
+    }
 }
 
