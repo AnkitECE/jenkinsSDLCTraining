@@ -7,6 +7,9 @@ pipeline {
         ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}" // Define the ENV based on the branch name
         BRANCH = "${env.BRANCH_NAME}"
     }
+    options {
+        skipDefaultCheckout(true)
+    }
 
     stages {
         
@@ -38,6 +41,13 @@ pipeline {
                           message: "Build for job ${env.JOB_NAME} has started - (<${env.BUILD_URL}|Open>)"
             }
         }
+        stage('Clean Checkout') {
+            steps {
+                deleteDir()
+                checkout scm
+            }
+        }
+
         stage('Scan for secrets') {
             steps {
                 sh '''
