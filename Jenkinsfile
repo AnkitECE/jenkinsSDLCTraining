@@ -9,6 +9,17 @@ pipeline {
     }
 
     stages {
+        stage('Send initial notification') {
+            when {
+                anyOf {
+                    branch 'master';
+                    branch 'develop'
+                }
+            }
+            steps {
+                slackSend channel: '#all-udemyjenkinslab',
+                          message: "Build for job ${env.JOB_NAME} has started - (<${env.BUILD_URL}|Open>)"
+            }
         stage('Build') {
             steps {
                 sh 'bash scripts/build.sh' // Run the build
@@ -31,5 +42,13 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            slackSend channel: '#all-udemyjenkinslab',
+                      color: "${currentBuild.currentResult == 'SUCCESS' ? 'good' : 'danger'}",
+                      message: "Build for job ${env.JOB_NAME} finished with status ${currentBuild.currentResult} - (<${env.BUILD_URL}|Open>)"
+        }
+    }
+
 }
 
