@@ -26,5 +26,4 @@ fi
 if pgrep $ENV; then pkill -9 $ENV; fi
 
 echo "*** Deploying the app ..."
-cp main "$JENKINS_HOME/$ENV/$ENV"
-sleep 3 && TARGET_ENV=$ENV BRANCH="$BRANCH" \ nohup $JENKINS_HOME/$ENV/$ENV &
+sleep 3 && TARGET_ENV=$ENV BRANCH="$BRANCH" nohup $JENKINS_HOME/$ENV/$ENV &
