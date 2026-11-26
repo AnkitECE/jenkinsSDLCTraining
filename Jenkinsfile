@@ -9,6 +9,7 @@ pipeline {
     }
 
     stages {
+        
         stage('Send initial notification') {
             when {
                 anyOf {
@@ -17,6 +18,22 @@ pipeline {
                 }
             }
             steps {
+                sh '''
+                    echo "Current commit:"
+                    git rev-parse HEAD
+
+                    echo "README line count:"
+                    wc -l README.md
+
+                    echo "README contents:"
+                    cat -n README.md
+
+                    echo "Git status:"
+                    git status --short
+
+                    echo "Tracked README from current commit:"
+                    git show HEAD:README.md
+                '''
                 slackSend channel: '#all-udemyjenkinslab',
                           message: "Build for job ${env.JOB_NAME} has started - (<${env.BUILD_URL}|Open>)"
             }
